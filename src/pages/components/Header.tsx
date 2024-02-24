@@ -1,14 +1,14 @@
 import * as stylex from '@stylexjs/stylex';
 import { NavLink } from 'react-router-dom';
 
-import { colors } from '../../base/tokens.stylex';
+import { colors, sizes, borders, fontSizes, spaces, animation } from '../../base/tokens.stylex';
 
 const styles = stylex.create({
   navContainer: {
     width: '100vw',
-    height: '2.5rem',
+    height: `${sizes.elementHeightL}`,
     borderBottomStyle: 'solid',
-    borderBottomWidth: '0.1rem',
+    borderBottomWidth: `${borders.borderThin}`,
     borderBottomColor: `${colors.borderSubtle}`,
     backgroundColor: `${colors.backgroundSubtle}`,
     boxShadow: `${colors.borderSubtle} 0 0.1rem 1.5rem -4px`
@@ -17,16 +17,16 @@ const styles = stylex.create({
     display: 'flex',
     listStyle: 'none',
     height: '100%',
-    fontSize: '1.3rem',
+    fontSize: `${fontSizes.textSizeXXL}`,
     padding: 0,
     margin: 0
   },
   headerNav: {
     display: 'inline-block',
-    height: '2.5rem',
-    lineHeight: '2.5rem',
-    padding: '0 1rem',
-    transition: 'all 300ms',
+    height: `${sizes.elementHeightL}`,
+    lineHeight: `${sizes.elementHeightL}`,
+    padding: `0 ${spaces.spacingL}`,
+    transition: `all ${animation.transitionDurationDefault}`,
     backgroundColor: {
       default: null,
       ':hover': `${colors.backgroundElementHover}`
@@ -38,16 +38,20 @@ const styles = stylex.create({
 });
 
 const routes = [{
+  name: 'home',
   text: 'Home',
   route: '/',
   thumbnail: ''
 }, {
+  name: 'albums',
   text: 'Albums',
   route: '/albums',
 }, {
+  name: 'posts',
   text: 'Posts',
   route: '/posts',
 }, {
+  name: 'todos',
   text: 'To DOs',
   route: '/todos'
 }]
@@ -56,9 +60,9 @@ export default function Header () {
   return (
     <nav {...stylex.props(styles.navContainer)}>
       <ul {...stylex.props(styles.headerElementsContainer)}>
-        {routes.map(({ text, route }) => {
+        {routes.map(({ name, text, route }) => {
           return (
-            <li>
+            <li key={name}>
               <NavLink to={route} className={({ isActive }) => {
                 const stylexProps = stylex.props(styles.headerNav, isActive && styles.activeNav);
                 return stylexProps.className;

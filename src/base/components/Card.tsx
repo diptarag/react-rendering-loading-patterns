@@ -1,8 +1,9 @@
 import { ReactNode } from "react"
 import * as stylex from '@stylexjs/stylex';
-import { colors } from '../tokens.stylex';
+import { colors, borders, spaces, animation } from '../tokens.stylex';
 
 interface CardProps {
+  width?: string,
   children: ReactNode
 }
 
@@ -11,7 +12,7 @@ const styles = stylex.create({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    borderWidth: '0.1rem',
+    borderWidth: `${borders.borderThin}`,
     borderStyle: 'solid',
     borderColor: {
       default: `${colors.borderSubtle}`,
@@ -25,16 +26,20 @@ const styles = stylex.create({
       default: 'default',
       ':hover': 'pointer'
     },
-    borderRadius: '0.5rem',
-    padding: '0.5rem',
+    borderRadius: `${spaces.spacingS}`,
+    padding: `${spaces.spacingS}`,
     paddingTop: '0',
-    transition: 'all 300ms'
-  }
+    transition: `all ${animation.transitionDurationDefault}`,
+    width: '100%'
+  },
+  fixedWidthContainer: (width: string) => ({
+    width
+  })
 });
 
-export default function Card ({ children }: CardProps) {
+export default function Card ({ width = '', children }: CardProps) {
   return (
-    <div {...stylex.props(styles.container)}>
+    <div {...stylex.props(styles.container, styles.fixedWidthContainer(width))}>
       {children}
     </div>
   );

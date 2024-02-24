@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import Layout from './pages/Layout.tsx';
 import Home from './pages/Home.tsx';
-import Albums from './pages/Albums.tsx';
+import Albums from './pages/albums';
 import ToDos from './pages/ToDos.tsx';
 import Posts from './pages/Posts.tsx';
 
@@ -19,7 +19,8 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-        path: 'albums',
+        id: 'albums',
+        path: 'albums/:albumsId?',
         element: <Albums />
       },
       {
