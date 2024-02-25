@@ -30,20 +30,33 @@ const TODO_FETCH_ENDPOINT = `${API_ENDPOINT_BASE_PATH}/users/${USER_ID}/todos`;
 
 export default function ToDos () {
   const { data, fetchStatus } = useFetch<ToDo[]>(TODO_FETCH_ENDPOINT);
+  const [todoList, setToDoList] = useState<ToDo[]>([]);
   const [completed, setCompleted] = useState<ToDo[]>([]);
   const [pending, setPending] = useState<ToDo[]>([]);
+
+  useEffect(() => {
+    if (data) {
+      setToDoList(data);
+    }
+  }, [data]);
 
   useEffect(() => {
     const completedTasks: ToDo[] = [],
       pendingTasks: ToDo[] = [];
 
-    data?.forEach((todo) => todo.completed ? completedTasks.push(todo) : pendingTasks.push(todo));
+    todoList?.forEach((todo) => todo.completed ? completedTasks.push(todo) : pendingTasks.push(todo));
     setCompleted(completedTasks);
     setPending(pendingTasks);
-  }, [data]);
+  }, [todoList]);
 
   const handleCheckboxChange = (id: string, checked: boolean) => {
-    console.log(id, checked);
+    const todoListClone = todoList.map(todo => ({ ...todo }));
+    const changedItem = todoListClone.find(todo => id === todo.id.toString());
+
+    if (changedItem) {
+      changedItem.completed = checked;
+      setToDoList(todoListClone);
+    }
   };
 
   if (fetchStatus === 'pending' || !data) {
@@ -62,7 +75,7 @@ export default function ToDos () {
       <h2>Completed</h2>
       <div {...stylex.props(styles.checkBoxContainer)}>
         {
-          completed?.map(({ id, title }) => <Checkbox id={id} label={title} name={id} checked onChange={handleCheckboxChange} />)
+          completed?.map(({ id, title }) => <Checkbox key={id} id={id} label={title} name={id} checked onChange={handleCheckboxChange} />)
         }
       </div>
     </div>
