@@ -11,6 +11,7 @@ export const sizes = stylex.defineVars({
 
 export const spaces = stylex.defineVars({
   spacingZero: '0',
+  spacingXXS: '0.125rem',
   spacingXS: '0.25rem',
   spacingS: '0.5rem',
   spacingM: '0.75rem',
@@ -38,6 +39,7 @@ export const borders = stylex.defineVars({
 });
 
 export const animation = stylex.defineVars({
+  transitionDurationM: '150ms',
   transitionDurationDefault: '300ms'
 });
 
@@ -54,10 +56,38 @@ export const colors = stylex.defineVars({
   backgroundSolidHover: '#3b9eff',
   fontLowContrast: '#70b8ff',
   fontHighContrast: '#c2e6ff',
+  fontLightBackground: '#111927',
   elementColor: '#003362',
   backgroundElementLight: '#c2e6ff',
-  backgroundElementLightHover: '#b6ecf7'
+  backgroundElementLightHover: '#b6ecf7',
+  blackAlpha1: 'rgba(0, 0, 0, 0.05)',
+  blackAlpha2: 'rgba(0, 0, 0, 0.1)',
+  blackAlpha3: 'rgba(0, 0, 0, 0.15)',
+  blackAlpha4: 'rgba(0, 0, 0, 0.2)',
+  blackAlpha5: 'rgba(0, 0, 0, 0.3)',
+  blackAlpha6: 'rgba(0, 0, 0, 0.4)',
+  blackAlpha7: 'rgba(0, 0, 0, 0.5)',
+  blackAlpha8: 'rgba(0, 0, 0, 0.6)',
+  blackAlpha9: 'rgba(0, 0, 0, 0.7)',
+  blackAlpha10: 'rgba(0, 0, 0, 0.8)',
+  blackAlpha11: 'rgba(0, 0, 0, 0.9)',
+  blackAlpha12: 'rgba(0, 0, 0, 0.95)'
 });
+
+// .blackA {
+//   --black-a1: rgba(0, 0, 0, 0.05);
+//   --black-a2: rgba(0, 0, 0, 0.1);
+//   --black-a3: rgba(0, 0, 0, 0.15);
+//   --black-a4: rgba(0, 0, 0, 0.2);
+//   --black-a5: rgba(0, 0, 0, 0.3);
+//   --black-a6: rgba(0, 0, 0, 0.4);
+//   --black-a7: rgba(0, 0, 0, 0.5);
+//   --black-a8: rgba(0, 0, 0, 0.6);
+//   --black-a9: rgba(0, 0, 0, 0.7);
+//   --black-a10: rgba(0, 0, 0, 0.8);
+//   --black-a11: rgba(0, 0, 0, 0.9);
+//   --black-a12: rgba(0, 0, 0, 0.95);
+// }
 
 // const cyanDark = {
 //   cyan1: '#0b161a',
@@ -89,20 +119,7 @@ export const colors = stylex.defineVars({
 //   indigo12: '#d6e1ff',
 // }
 
-// .blackA {
-//   --black-a1: rgba(0, 0, 0, 0.05);
-//   --black-a2: rgba(0, 0, 0, 0.1);
-//   --black-a3: rgba(0, 0, 0, 0.15);
-//   --black-a4: rgba(0, 0, 0, 0.2);
-//   --black-a5: rgba(0, 0, 0, 0.3);
-//   --black-a6: rgba(0, 0, 0, 0.4);
-//   --black-a7: rgba(0, 0, 0, 0.5);
-//   --black-a8: rgba(0, 0, 0, 0.6);
-//   --black-a9: rgba(0, 0, 0, 0.7);
-//   --black-a10: rgba(0, 0, 0, 0.8);
-//   --black-a11: rgba(0, 0, 0, 0.9);
-//   --black-a12: rgba(0, 0, 0, 0.95);
-// }
+
 
 // const mauveDark = {
 //   mauve1: '#121113',

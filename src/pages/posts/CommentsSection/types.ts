@@ -1,0 +1,10 @@
+interface Comment {
+  postId: number,
+  id: number,
+  name: string,
+  email: string,
+  body: string,
+  date?: Date
+}
+
+export type { Comment };

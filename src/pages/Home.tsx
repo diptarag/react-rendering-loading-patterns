@@ -47,8 +47,10 @@ const routes = [{
   thumbnail: ToDoIcon
 }];
 
+const API_ENDPOINT_HOME = `${API_ENDPOINT_BASE_PATH}/users/${USER_ID}`;
+
 export default function Home() {
-  const { data, fetchStatus } = useFetch<UserData>(`${API_ENDPOINT_BASE_PATH}/users/${USER_ID}`);
+  const { data, fetchStatus } = useFetch<UserData>(API_ENDPOINT_HOME);
 
   if (fetchStatus === 'pending' || !data) {
     return <Loader />;

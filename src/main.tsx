@@ -6,7 +6,7 @@ import Layout from './pages/Layout.tsx';
 import Home from './pages/Home.tsx';
 import Albums from './pages/albums';
 import ToDos from './pages/ToDos.tsx';
-import Posts from './pages/Posts.tsx';
+import Posts from './pages/posts';
 
 import './index.css';
 
@@ -28,7 +28,8 @@ const router = createBrowserRouter([
         element: <ToDos />
       },
       {
-        path: 'posts',
+        id: 'posts',
+        path: 'posts/:postId?',
         element: <Posts />
       }
     ]

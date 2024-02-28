@@ -47,6 +47,7 @@ const styles = stylex.create({
     textAlign: 'center',
     paddingTop: `${spaces.spacingXXL}`,
     paddingLeft: `${spaces.spacingXXXL}`,
+    paddingRight: `${spaces.spacingXL}`,
     height: '90vh',
     overflowY: 'scroll'
   }

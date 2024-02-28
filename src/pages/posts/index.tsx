@@ -5,36 +5,38 @@ import useFetch from '../../base/hooks/useFetch';
 
 import Loader from '../components/Loader';
 import SidebarLayout from '../components/SidebarLayout';
-import AlbumDetails from './AlbumDetails';
+import Post from './Post';
 
-interface Album {
+interface Post {
   userId: number,
   id: number,
-  title: string
+  title: string,
+  body: string
 }
 
-const API_ENDPOINT_ALBUMS = `${API_ENDPOINT_BASE_PATH}/users/${USER_ID}/albums`;
+const API_ENDPOINT_POSTS = `${API_ENDPOINT_BASE_PATH}/users/${USER_ID}/posts`;
 
-export default function Albums () {
-  const { data, fetchStatus } = useFetch<Album[]>(API_ENDPOINT_ALBUMS);
+export default function Posts () {
+  const { data, fetchStatus } = useFetch<Post[]>(API_ENDPOINT_POSTS);
   const matches = useMatches();
 
   if (fetchStatus === 'pending' || !data) {
     return <Loader />;
   }
 
-  const albumId = matches.find((match) => match.id === 'albums')?.params.albumsId;
+  const postId = matches.find(match => match.id === 'posts')?.params.postId;
+  const post = data.find(({ id }) => id.toString() === postId);
 
   return (
     <SidebarLayout data={data.map(({ id, title }) => {
       return {
         key: id.toString(),
         label: title,
-        route: `/albums/${id}`
+        route: `/posts/${id}`
       }
     })}>
       {
-        albumId ? <AlbumDetails albumId={albumId} /> : <h1>Select an album to load photos</h1>
+        post ? <Post title={post.title} description={post.body} id={post.id} /> : <h1>Select a post to load content and comments</h1>
       }
     </SidebarLayout>
   );
