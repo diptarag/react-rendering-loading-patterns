@@ -24,15 +24,32 @@ export default function CommentsSection ({ postId }: CommentsSectionProps) {
   const { data, fetchStatus } = useFetch<Comment[]>(`${API_ENDPOINT_BASE_PATH}/posts/${postId}/comments`);
   const [comments, setComments] = useState<Comment[]>([]);
 
+  const sortDateAndSetComments = (unsortedComments: Comment[]) => {
+    const commentDataWithDate = _.map(unsortedComments, comment => {
+      return comment.date ? comment : { ...comment, date: getRandomDate(START_DATE, END_DATE) }
+    })
+    commentDataWithDate.sort((comment1, comment2) => moment(comment2.date).diff(comment1.date));
+    setComments(commentDataWithDate.sort());
+  };
+
+  const handleCommentsAdd = (title: string, comment: string) => {
+    const updatedComments = comments.slice(0);
+    updatedComments.push({
+      name: title,
+      body: comment,
+      email: 'me',
+      date: new Date(),
+      postId,
+      id: comments.length + 1
+    });
+    sortDateAndSetComments(updatedComments);
+  };
+
   useEffect(() => {
     if (data) {
-      const commentDataWithDate = _.map(data, comment => {
-        return comment.date ? comment : { ...comment, date: getRandomDate(START_DATE, END_DATE) }
-      })
-      commentDataWithDate.sort((comment1, comment2) => moment(comment2.date).diff(comment1.date));
-      setComments(commentDataWithDate.sort());
+      sortDateAndSetComments(data);
     }
-  }, [data])
+  }, [data]);
 
   if (fetchStatus === 'pending' || !data) {
     return <Loader />;
@@ -41,7 +58,7 @@ export default function CommentsSection ({ postId }: CommentsSectionProps) {
   return (
     <div>
       <h4>Comments</h4>
-      <AddComment />
+      <AddComment handleCommentsAdd={handleCommentsAdd} />
       <Comments data={comments} />
     </div>
   );
