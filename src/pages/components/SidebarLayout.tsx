@@ -50,6 +50,9 @@ const styles = stylex.create({
     paddingRight: `${spaces.spacingXL}`,
     height: '90vh',
     overflowY: 'scroll'
+  },
+  activeNav: {
+    backgroundColor: `${colors.backgroundElementActive}`
   }
 });
 
@@ -57,15 +60,11 @@ export default function SidebarLayout ({ data, children }: SidebarLayoutProps) {
   return (
     <div {...stylex.props(styles.container)}>
       <ul {...stylex.props(styles.sidebar)}>
-        {
-          data.map(({ key, route, label }) => <li key={key} {...stylex.props(styles.sidebarListItem)}>
-            <NavLink to={route}>{label}</NavLink>
-            {/* <NavLink to={route} className={({ isActive }) => {
-                const stylexProps = stylex.props(styles.sidebarListItem, isActive && styles.activeNav);
-                return stylexProps.className;
-              }}>
-                {label}
-              </NavLink> */}
+      {
+          data.map(({ key, route, label }) => <li key={key}>
+            <NavLink to={route}>
+              {({ isActive }) => <div {...stylex.props(styles.sidebarListItem, isActive && styles.activeNav)}>{label}</div>}
+            </NavLink>
           </li>)
         }
       </ul>
