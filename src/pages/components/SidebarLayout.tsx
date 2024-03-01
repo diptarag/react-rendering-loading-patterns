@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 import * as stylex from '@stylexjs/stylex';
 import { colors, spaces, fontSizes, borders } from '../../base/tokens.stylex';
+import TooltipProvider from '../../base/components/Tooltip';
 
 interface Sidebar {
   key: string,
@@ -62,9 +63,11 @@ export default function SidebarLayout ({ data, children }: SidebarLayoutProps) {
       <ul {...stylex.props(styles.sidebar)}>
       {
           data.map(({ key, route, label }) => <li key={key}>
-            <NavLink to={route}>
-              {({ isActive }) => <div {...stylex.props(styles.sidebarListItem, isActive && styles.activeNav)}>{label}</div>}
-            </NavLink>
+            <TooltipProvider text={label}>
+              <NavLink to={route}>
+                {({ isActive }) => <div {...stylex.props(styles.sidebarListItem, isActive && styles.activeNav)}>{label}</div>}
+              </NavLink>
+            </TooltipProvider>
           </li>)
         }
       </ul>
