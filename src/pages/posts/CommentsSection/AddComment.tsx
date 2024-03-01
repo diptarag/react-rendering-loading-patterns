@@ -27,11 +27,14 @@ const styles = stylex.create({
     justifyContent: 'center'
   },
   formInput: {
+    borderStyle: 'none',
+    outline: 'none',
     width: '100%',
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: `${borders.borderRadiusL}`,
+    fontFamily: '"Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
     backgroundColor: {
       default: `${colors.backgroundElement}`,
       '::selection': `${colors.backgroundElementActive}`
@@ -59,16 +62,20 @@ const styles = stylex.create({
   },
   textArea: {
     resize: 'none',
+    height:  `${sizes.textareaHeight}`,
     padding: `${spaces.spacingS}`
   },
   button: {
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
+    borderStyle: 'unset',
     borderRadius: `${borders.borderRadiusL}`,
-    padding: `0 ${spaces.spacingL}`,
+    padding: `${spaces.spacingXL}`,
     lineHeight: 1,
     fontWeight: '500',
+    fontFamily: '"Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
+    fontSize: `${fontSizes.textSize}`,
     height: `${sizes.elementHeight}`,
     color: `${colors.fontLightBackground}`,
     width: '30%',

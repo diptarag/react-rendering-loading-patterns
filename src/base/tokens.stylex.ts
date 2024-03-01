@@ -6,7 +6,8 @@ export const sizes = stylex.defineVars({
   sizeM: '2rem',
   elementHeight: '2rem',
   elementHeightS: '1.5rem',
-  elementHeightL: '2.5rem'
+  elementHeightL: '2.5rem',
+  textareaHeight: '5rem'
 });
 
 export const spaces = stylex.defineVars({

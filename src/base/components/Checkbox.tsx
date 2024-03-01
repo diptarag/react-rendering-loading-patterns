@@ -18,6 +18,7 @@ const styles = stylex.create({
     alignItems: 'center'
   },
   checkBoxRoot: {
+    borderStyle: 'unset',
     backgroundColor: {
       default: `${colors.backgroundElementLight}`,
       ':hover': `${colors.backgroundElementLightHover}`

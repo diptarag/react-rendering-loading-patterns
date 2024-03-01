@@ -18,7 +18,6 @@ a {
 }
 
 input, textarea, button {
-  all: unset;
   box-sizing: border-box;
 }
 
