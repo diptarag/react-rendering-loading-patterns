@@ -1,5 +1,9 @@
+import React from 'react';
 import * as stylex from '@stylexjs/stylex';
-import CommentsSection from './CommentsSection';
+
+import LazyLoad from '../components/LazyLoad';
+
+const CommentsSection = React.lazy(() => import('./CommentsSection/CommentsSection'));
 
 interface PostProps {
   id: number,
@@ -20,7 +24,9 @@ export default function Post ({ id, title, description }: PostProps) {
     <div {...stylex.props(styles.container)}>
       <h1>{title}</h1>
       <p>{description}</p>
-      <CommentsSection postId={id}/>
+      <LazyLoad>
+        <CommentsSection postId={id}/>
+      </LazyLoad>
     </div>
   );
 }
