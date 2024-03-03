@@ -3,17 +3,16 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import Layout from './pages/Layout.tsx';
-import Home from './pages/Home.tsx';
-import Albums from './pages/albums';
-import ToDos from './pages/ToDos.tsx';
-import Posts from './pages/posts';
+
+import { ToDos, Home, Albums, Posts } from './lazy-imports';
+import LazyLoad from './pages/components/LazyLoad';
 
 import './index.css';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Home />
+    element: <LazyLoad><Home /></LazyLoad>
   },
   {
     element: <Layout />,
@@ -21,16 +20,16 @@ const router = createBrowserRouter([
       {
         id: 'albums',
         path: 'albums/:albumsId?',
-        element: <Albums />
+        element: <LazyLoad><Albums /></LazyLoad>
       },
       {
         path: 'todos',
-        element: <ToDos />
+        element: <LazyLoad><ToDos /></LazyLoad>
       },
       {
         id: 'posts',
         path: 'posts/:postId?',
-        element: <Posts />
+        element: <LazyLoad><Posts /></LazyLoad>
       }
     ]
   }
