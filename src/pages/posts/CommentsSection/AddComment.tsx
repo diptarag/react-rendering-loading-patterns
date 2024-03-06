@@ -34,7 +34,7 @@ const styles = stylex.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: `${borders.borderRadiusL}`,
-    fontFamily: '"Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
+    fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
     backgroundColor: {
       default: `${colors.backgroundElement}`,
       '::selection': `${colors.backgroundElementActive}`
@@ -74,7 +74,7 @@ const styles = stylex.create({
     padding: `${spaces.spacingXL}`,
     lineHeight: 1,
     fontWeight: '500',
-    fontFamily: '"Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
+    fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
     fontSize: `${fontSizes.textSize}`,
     height: `${sizes.elementHeight}`,
     color: `${colors.fontLightBackground}`,
