@@ -1,8 +1,5 @@
 import * as stylex from '@stylexjs/stylex';
-import { Link } from 'react-router-dom';
-
-import { API_ENDPOINT_BASE_PATH, USER_ID } from '../global';
-import useFetch from '../base/hooks/useFetch';
+import { Link, useLoaderData, useNavigation } from 'react-router-dom';
 
 import Text from '../base/components/Text';
 import Card from '../base/components/Card';
@@ -14,6 +11,10 @@ import ToDoIcon from '../assets/todo.svg';
 
 interface UserData {
   name: string
+}
+
+interface LoaderData {
+  userData: UserData
 }
 
 const styles = stylex.create({
@@ -47,12 +48,11 @@ const routes = [{
   thumbnail: ToDoIcon
 }];
 
-const API_ENDPOINT_HOME = `${API_ENDPOINT_BASE_PATH}/users/${USER_ID}`;
-
 export default function Home() {
-  const { data, fetchStatus } = useFetch<UserData>(API_ENDPOINT_HOME);
+  const { userData: data } = useLoaderData() as LoaderData;
+  const { state } = useNavigation();
 
-  if (fetchStatus === 'pending' || !data) {
+  if (state === 'loading' || !data) {
     return <Loader />;
   }
 
@@ -62,7 +62,7 @@ export default function Home() {
       <div {...stylex.props(styles.cardContainer)}>
         {routes.map(({ route, text, thumbnail }) => {
           return (
-            <Link to={route}>
+            <Link to={route} key={text}>
               <Card>
                 <img src={thumbnail} alt={text} />
                 <Text size='large'>{text}</Text>

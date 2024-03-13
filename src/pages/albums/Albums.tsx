@@ -1,29 +1,23 @@
-import { useMatches } from 'react-router-dom';
-
-import { API_ENDPOINT_BASE_PATH, USER_ID } from '../../global';
-import useFetch from '../../base/hooks/useFetch';
+import { useLoaderData, useNavigation } from 'react-router-dom';
 
 import Loader from '../components/Loader';
 import SidebarLayout from '../components/SidebarLayout';
 import AlbumDetails from './AlbumDetails';
 
-interface Album {
-  userId: number,
-  id: number,
-  title: string
+import type { Album, Photo } from './types';
+
+interface LoaderData {
+  albums: Album[],
+  photos?: Photo[]
 }
 
-const API_ENDPOINT_ALBUMS = `${API_ENDPOINT_BASE_PATH}/users/${USER_ID}/albums`;
-
 export default function Albums () {
-  const { data, fetchStatus } = useFetch<Album[]>(API_ENDPOINT_ALBUMS);
-  const matches = useMatches();
+  const { albums: data, photos } = useLoaderData() as LoaderData;
+  const { state } = useNavigation();
 
-  if (fetchStatus === 'pending' || !data) {
+  if (state === 'loading' || !data) {
     return <Loader />;
   }
-
-  const albumId = matches.find((match) => match.id === 'albums')?.params.albumsId;
 
   return (
     <SidebarLayout data={data.map(({ id, title }) => {
@@ -34,7 +28,7 @@ export default function Albums () {
       }
     })}>
       {
-        albumId ? <AlbumDetails albumId={albumId} /> : <h1>Select an album to load photos</h1>
+        photos ? <AlbumDetails photos={photos} /> : <h1>Select an album to load photos</h1>
       }
     </SidebarLayout>
   );

@@ -1,18 +1,19 @@
 import { useState, useEffect } from 'react';
 import * as stylex from '@stylexjs/stylex';
 import { spaces } from '../base/tokens.stylex';
-
-import { API_ENDPOINT_BASE_PATH, USER_ID } from '../global';
-import useFetch from '../base/hooks/useFetch';
-
 import Loader from './components/Loader';
 import Checkbox from '../base/components/Checkbox';
+import { useLoaderData, useNavigation } from 'react-router-dom';
 
 interface ToDo {
   userId: number,
   id: number,
   title: string,
   completed: boolean
+}
+
+interface LoaderData {
+  todos: ToDo[]
 }
 
 const styles = stylex.create({
@@ -26,10 +27,9 @@ const styles = stylex.create({
   }
 });
 
-const TODO_FETCH_ENDPOINT = `${API_ENDPOINT_BASE_PATH}/users/${USER_ID}/todos`;
-
 export default function ToDos () {
-  const { data, fetchStatus } = useFetch<ToDo[]>(TODO_FETCH_ENDPOINT);
+  const { todos: data } = useLoaderData() as LoaderData;
+  const { state } = useNavigation();
   const [todoList, setToDoList] = useState<ToDo[]>([]);
   const [completed, setCompleted] = useState<ToDo[]>([]);
   const [pending, setPending] = useState<ToDo[]>([]);
@@ -59,7 +59,7 @@ export default function ToDos () {
     }
   };
 
-  if (fetchStatus === 'pending' || !data) {
+  if (state === 'loading' || !data) {
     return <Loader />;
   }
 

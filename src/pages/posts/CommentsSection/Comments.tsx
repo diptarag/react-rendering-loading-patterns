@@ -3,7 +3,7 @@ import moment from 'moment-timezone';
 import * as stylex from '@stylexjs/stylex';
 import { spaces, borders, fontSizes, colors } from '../../../base/tokens.stylex';
 
-import type { Comment } from './types';
+import type { Comment } from '../types';
 
 interface CommentsProps {
   data: Comment[]

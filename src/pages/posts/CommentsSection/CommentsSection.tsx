@@ -2,8 +2,6 @@ import { useState, useEffect } from 'react';
 import _ from 'lodash';
 import moment from 'moment';
 
-import { API_ENDPOINT_BASE_PATH } from '../../../global';
-import useFetch from '../../../base/hooks/useFetch';
 import { getRandomDate } from '../../../base/utils/date';
 
 import Loader from '../../components/Loader';
@@ -11,17 +9,23 @@ import Loader from '../../components/Loader';
 import AddComment from './AddComment';
 import Comments from './Comments';
 
-import type { Comment } from './types';
+import type { Comment } from '../types';
+import { useNavigation, useRouteLoaderData } from 'react-router-dom';
 
 interface CommentsSectionProps {
   postId: number
+}
+
+interface LoaderData {
+  comments: Comment[]
 }
 
 const START_DATE = new Date('2000-01-01'),
   END_DATE = new Date();
 
 export default function CommentsSection ({ postId }: CommentsSectionProps) {
-  const { data, fetchStatus } = useFetch<Comment[]>(`${API_ENDPOINT_BASE_PATH}/posts/${postId}/comments`);
+  const { comments: data } = useRouteLoaderData('posts') as LoaderData;
+  const { state } = useNavigation();
   const [comments, setComments] = useState<Comment[]>([]);
 
   const sortDateAndSetComments = (unsortedComments: Comment[]) => {
@@ -51,7 +55,7 @@ export default function CommentsSection ({ postId }: CommentsSectionProps) {
     }
   }, [data]);
 
-  if (fetchStatus === 'pending' || !data) {
+  if (state === 'loading' || !data) {
     return <Loader />;
   }
 

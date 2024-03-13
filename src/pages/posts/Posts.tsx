@@ -1,26 +1,20 @@
-import { useMatches } from 'react-router-dom';
-
-import { API_ENDPOINT_BASE_PATH, USER_ID } from '../../global';
-import useFetch from '../../base/hooks/useFetch';
+import { useLoaderData, useMatches, useNavigation } from 'react-router-dom';
 
 import Loader from '../components/Loader';
 import SidebarLayout from '../components/SidebarLayout';
 import Post from './Post';
 
-interface Post {
-  userId: number,
-  id: number,
-  title: string,
-  body: string
+import type { Post as PostType } from './types';
+interface LoaderData {
+  posts: PostType[]
 }
 
-const API_ENDPOINT_POSTS = `${API_ENDPOINT_BASE_PATH}/users/${USER_ID}/posts`;
-
 export default function Posts () {
-  const { data, fetchStatus } = useFetch<Post[]>(API_ENDPOINT_POSTS);
+  const { posts: data } = useLoaderData() as LoaderData;
+  const { state } = useNavigation();
   const matches = useMatches();
 
-  if (fetchStatus === 'pending' || !data) {
+  if (state === 'loading' || !data) {
     return <Loader />;
   }
 
