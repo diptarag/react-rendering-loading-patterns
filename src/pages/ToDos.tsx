@@ -3,7 +3,8 @@ import * as stylex from '@stylexjs/stylex';
 import { spaces } from '../base/tokens.stylex';
 import Loader from './components/Loader';
 import Checkbox from '../base/components/Checkbox';
-import { useLoaderData, useNavigation } from 'react-router-dom';
+import { useAsyncValue, useNavigation } from 'react-router-dom';
+import LazyDataLoad from './components/LazyDataLoad';
 
 interface ToDo {
   userId: number,
@@ -13,7 +14,7 @@ interface ToDo {
 }
 
 interface LoaderData {
-  todos: ToDo[]
+  data: ToDo[]
 }
 
 const styles = stylex.create({
@@ -27,8 +28,8 @@ const styles = stylex.create({
   }
 });
 
-export default function ToDos () {
-  const { todos: data } = useLoaderData() as LoaderData;
+function ToDos () {
+  const data = (useAsyncValue() as LoaderData).data;
   const { state } = useNavigation();
   const [todoList, setToDoList] = useState<ToDo[]>([]);
   const [completed, setCompleted] = useState<ToDo[]>([]);
@@ -79,5 +80,13 @@ export default function ToDos () {
         }
       </div>
     </div>
+  );
+}
+
+export default function LazyTodos () {
+  return (
+    <LazyDataLoad lazyResolveField='todos'>
+      <ToDos />
+    </LazyDataLoad>
   );
 }

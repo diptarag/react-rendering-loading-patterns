@@ -1,23 +1,24 @@
-import { useLoaderData, useMatches, useNavigation } from 'react-router-dom';
+import { useAsyncValue, useMatches } from 'react-router-dom';
 
-import Loader from '../components/Loader';
 import SidebarLayout from '../components/SidebarLayout';
 import Post from './Post';
 
-import type { Post as PostType } from './types';
-interface LoaderData {
-  posts: PostType[]
+import type { Post as PostType, Comment } from './types';
+import LazyDataLoad from '../components/LazyDataLoad';
+
+interface PostsDetailsData {
+  data: Array<object>
 }
 
-export default function Posts () {
-  const { posts: data } = useLoaderData() as LoaderData;
-  const { state } = useNavigation();
+function Posts () {
+  const postsDetails = useAsyncValue() as Array<PostsDetailsData>;
   const matches = useMatches();
 
-  if (state === 'loading' || !data) {
-    return <Loader />;
+  if (!postsDetails || !Array.isArray(postsDetails)) {
+    return null;
   }
 
+  const data = postsDetails[0].data as PostType[];
   const postId = matches.find(match => match.id === 'posts')?.params.postId;
   const post = data.find(({ id }) => id.toString() === postId);
 
@@ -30,8 +31,16 @@ export default function Posts () {
       }
     })}>
       {
-        post ? <Post title={post.title} description={post.body} id={post.id} /> : <h1>Select a post to load content and comments</h1>
+        post ? <Post title={post.title} description={post.body} id={post.id} comments={postsDetails[1].data as Comment[]} /> : <h1>Select a post to load content and comments</h1>
       }
     </SidebarLayout>
+  );
+}
+
+export default function LazyPosts () {
+  return (
+    <LazyDataLoad lazyResolveField='postsDetails'>
+      <Posts />
+    </LazyDataLoad>
   );
 }

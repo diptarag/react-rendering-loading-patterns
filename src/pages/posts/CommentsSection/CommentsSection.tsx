@@ -1,32 +1,24 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import _ from 'lodash';
 import moment from 'moment';
 
 import { getRandomDate } from '../../../base/utils/date';
 
-import Loader from '../../components/Loader';
-
 import AddComment from './AddComment';
 import Comments from './Comments';
 
 import type { Comment } from '../types';
-import { useNavigation, useRouteLoaderData } from 'react-router-dom';
 
 interface CommentsSectionProps {
-  postId: number
-}
-
-interface LoaderData {
+  postId: number,
   comments: Comment[]
 }
 
 const START_DATE = new Date('2000-01-01'),
   END_DATE = new Date();
 
-export default function CommentsSection ({ postId }: CommentsSectionProps) {
-  const { comments: data } = useRouteLoaderData('posts') as LoaderData;
-  const { state } = useNavigation();
-  const [comments, setComments] = useState<Comment[]>([]);
+export default function CommentsSection ({ postId, comments: initialComments }: CommentsSectionProps) {
+  const [comments, setComments] = useState<Comment[]>(initialComments);
 
   const sortDateAndSetComments = (unsortedComments: Comment[]) => {
     const commentDataWithDate = _.map(unsortedComments, comment => {
@@ -48,16 +40,6 @@ export default function CommentsSection ({ postId }: CommentsSectionProps) {
     });
     sortDateAndSetComments(updatedComments);
   };
-
-  useEffect(() => {
-    if (data) {
-      sortDateAndSetComments(data);
-    }
-  }, [data]);
-
-  if (state === 'loading' || !data) {
-    return <Loader />;
-  }
 
   return (
     <div>

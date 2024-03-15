@@ -1,20 +1,17 @@
 import * as stylex from '@stylexjs/stylex';
-import { Link, useLoaderData, useNavigation } from 'react-router-dom';
+import { Link, useAsyncValue } from 'react-router-dom';
 
 import Text from '../base/components/Text';
 import Card from '../base/components/Card';
-import Loader from './components/Loader';
 
 import AlbumIcon from '../assets/album.svg';
 import PostIcon from '../assets/post.svg';
 import ToDoIcon from '../assets/todo.svg';
 
+import LazyDataLoad from './components/LazyDataLoad';
+
 interface UserData {
   name: string
-}
-
-interface LoaderData {
-  userData: UserData
 }
 
 const styles = stylex.create({
@@ -48,14 +45,8 @@ const routes = [{
   thumbnail: ToDoIcon
 }];
 
-export default function Home() {
-  const { userData: data } = useLoaderData() as LoaderData;
-  const { state } = useNavigation();
-
-  if (state === 'loading' || !data) {
-    return <Loader />;
-  }
-
+function Home () {
+  const data = useAsyncValue() as UserData;
   return (
     <div {...stylex.props(styles.homeContainer)}>
       <h1>Welcome, {data.name}</h1>
@@ -72,6 +63,14 @@ export default function Home() {
         })}
       </div>
     </div>
+  );
+}
+
+export default function LazyHome () {
+  return (
+    <LazyDataLoad lazyResolveField='userData'>
+      <Home />
+    </LazyDataLoad>
   );
 }
 

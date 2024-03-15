@@ -1,23 +1,25 @@
-import { useLoaderData, useNavigation } from 'react-router-dom';
+import { useAsyncValue } from 'react-router-dom';
 
-import Loader from '../components/Loader';
 import SidebarLayout from '../components/SidebarLayout';
 import AlbumDetails from './AlbumDetails';
 
 import type { Album, Photo } from './types';
 
-interface LoaderData {
-  albums: Album[],
-  photos?: Photo[]
+import LazyDataLoad from '../components/LazyDataLoad';
+
+interface AlbumDetailsData {
+  data: Array<object>
 }
 
-export default function Albums () {
-  const { albums: data, photos } = useLoaderData() as LoaderData;
-  const { state } = useNavigation();
+function Albums () {
+  const albumDetails = useAsyncValue() as Array<AlbumDetailsData>;
 
-  if (state === 'loading' || !data) {
-    return <Loader />;
+  if (!albumDetails || !Array.isArray(albumDetails)) {
+    return null;
   }
+
+  const data = albumDetails[0].data as Album[];
+
 
   return (
     <SidebarLayout data={data.map(({ id, title }) => {
@@ -28,8 +30,16 @@ export default function Albums () {
       }
     })}>
       {
-        photos ? <AlbumDetails photos={photos} /> : <h1>Select an album to load photos</h1>
+        albumDetails.length > 1 ? <AlbumDetails photos={albumDetails[1].data as Photo[]} /> : <h1>Select an album to load photos</h1>
       }
     </SidebarLayout>
+  );
+}
+
+export default function LazyAlbums () {
+  return (
+    <LazyDataLoad lazyResolveField='albumDetails'>
+      <Albums />
+    </LazyDataLoad>
   );
 }
