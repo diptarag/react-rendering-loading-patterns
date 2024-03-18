@@ -1,4 +1,4 @@
-import { useMatches } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { API_ENDPOINT_BASE_PATH, USER_ID } from '../../global';
 import useFetch from '../../base/hooks/useFetch';
@@ -18,13 +18,13 @@ const API_ENDPOINT_POSTS = `${API_ENDPOINT_BASE_PATH}/users/${USER_ID}/posts`;
 
 export default function Posts () {
   const { data, fetchStatus } = useFetch<Post[]>(API_ENDPOINT_POSTS);
-  const matches = useMatches();
+  const params = useParams();
 
   if (fetchStatus === 'pending' || !data) {
     return <Loader />;
   }
 
-  const postId = matches.find(match => match.id === 'posts')?.params.postId;
+  const postId = params.postId;
   const post = data.find(({ id }) => id.toString() === postId);
 
   return (

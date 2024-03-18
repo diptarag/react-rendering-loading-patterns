@@ -62,7 +62,7 @@ export default function Home() {
       <div {...stylex.props(styles.cardContainer)}>
         {routes.map(({ route, text, thumbnail }) => {
           return (
-            <Link to={route}>
+            <Link to={route} key={text}>
               <Card>
                 <img src={thumbnail} alt={text} />
                 <Text size='large'>{text}</Text>

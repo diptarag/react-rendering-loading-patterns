@@ -1,4 +1,4 @@
-import { useMatches } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { API_ENDPOINT_BASE_PATH, USER_ID } from '../../global';
 import useFetch from '../../base/hooks/useFetch';
@@ -17,13 +17,13 @@ const API_ENDPOINT_ALBUMS = `${API_ENDPOINT_BASE_PATH}/users/${USER_ID}/albums`;
 
 export default function Albums () {
   const { data, fetchStatus } = useFetch<Album[]>(API_ENDPOINT_ALBUMS);
-  const matches = useMatches();
+  const params = useParams();
 
   if (fetchStatus === 'pending' || !data) {
     return <Loader />;
   }
 
-  const albumId = matches.find((match) => match.id === 'albums')?.params.albumsId;
+  const albumId = params?.albumsId;
 
   return (
     <SidebarLayout data={data.map(({ id, title }) => {
